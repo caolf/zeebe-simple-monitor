@@ -28,6 +28,7 @@ import io.zeebe.monitor.rest.dto.ProcessDto;
 import io.zeebe.monitor.rest.dto.ProcessInstanceListDto;
 import io.zeebe.monitor.rest.dto.TimerDto;
 import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -124,7 +125,7 @@ public class ProcessesViewController extends AbstractViewController {
             .collect(Collectors.toList());
     model.put("messageSubscriptions", messageSubscriptions);
 
-    final var resourceAsStream = new ByteArrayInputStream(process.getResource().getBytes());
+    final var resourceAsStream = new ByteArrayInputStream(process.getResource().getBytes(StandardCharsets.UTF_8));
     final var bpmn = Bpmn.readModelFromStream(resourceAsStream);
     model.put("instance.bpmnElementInfos", getBpmnElementInfos(bpmn));
 
